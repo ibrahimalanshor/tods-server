@@ -6,6 +6,11 @@ const AuthRequest = require('./requests');
 const router = Router();
 
 router.post('/login', AuthRequest.login, ExpressAuth.login(AuthService));
+router.post(
+  '/register',
+  AuthRequest.register,
+  ExpressAuth.register(AuthService)
+);
 
 module.exports = {
   path: '/api/auth',

@@ -1,20 +1,31 @@
+const Exception = require('@ibrahimanshor/express-app/lib/exceptions');
 const ExpressAuth = require('@ibrahimanshor/express-auth');
 const config = require('../../../../config');
 const User = require('../../user/model');
 const RefreshToken = require('../../refresh_token/model');
+const { UniqueConstraintError } = require('sequelize');
 
 module.exports = class AuthService extends ExpressAuth.PasswordService {
   static config = {
-    withRegisterVerification: false, // send register verification (default false)
+    withRegisterVerification: false,
     auth: {
       secret: config.app.key,
-      accessToken: { expire: '30m' }, // jwt access token expire time
-      refreshToken: { expire: '365d' }, // jwt refresh token expire time
+      accessToken: { expire: '30m' },
+      refreshToken: { expire: '365d' },
     },
   };
 
-  // user service
-  static async createUser(credentials) {} // create new user (credential = { ...req.body, password: hashedPassword }), return created user
+  static async createUser(credentials) {
+    try {
+      return await User.create(credentials);
+    } catch (err) {
+      if (err instanceof UniqueConstraintError) {
+        throw new Exception.ConflictException('email already exists');
+      }
+
+      throw err;
+    }
+  }
   static async getUserByEmail(email) {
     const user = await User.unscoped().findOne({
       where: { email },
