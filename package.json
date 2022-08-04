@@ -5,21 +5,27 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "dev": "NODE_ENV=development nodemon index.js",
+    "sync": "NODE_ENV=development node src/database/sync.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@ibrahimanshor/express-app": "^0.0.5",
-    "@ibrahimanshor/express-auth": "^0.0.1",
-    "@ibrahimanshor/express-mail": "^0.0.1"
+    "@ibrahimanshor/express-app": "^0.0.9",
+    "@ibrahimanshor/express-auth": "^0.0.5",
+    "@ibrahimanshor/express-mail": "^0.0.1",
+    "express-validator": "^6.14.2",
+    "mysql2": "^2.3.3",
+    "sequelize": "^6.21.3"
   },
   "devDependencies": {
     "dotenv": "^16.0.1",
     "eslint": "^8.21.0",
     "husky": "^8.0.1",
     "lint-staged": "^13.0.3",
+    "nodemon": "^2.0.19",
     "prettier": "2.7.1"
   },
   "lint-staged": {
