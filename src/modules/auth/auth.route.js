@@ -11,6 +11,11 @@ router.post(
   AuthRequest.register,
   ExpressAuth.register(AuthService)
 );
+router.post(
+  '/refresh_token',
+  AuthRequest.refreshToken,
+  ExpressAuth.refreshToken(AuthService)
+);
 
 module.exports = {
   path: '/api/auth',
