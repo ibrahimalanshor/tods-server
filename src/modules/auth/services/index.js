@@ -36,7 +36,11 @@ module.exports = class AuthService extends ExpressAuth.PasswordService {
     return user;
   }
   static async getUserById(id) {
-    return await User.findByPk(id);
+    const user = await User.findByPk(id);
+
+    if (!user) throw new Error('user not found');
+
+    return user;
   }
 
   // refresh token service
@@ -49,7 +53,15 @@ module.exports = class AuthService extends ExpressAuth.PasswordService {
       token,
     });
   }
-  static async getRefreshTokenByToken(token) {} // get refresh token by token
+  static async getRefreshTokenByToken(token) {
+    const refreshToken = await RefreshToken.findOne({
+      where: { token },
+    });
+
+    if (!refreshToken) throw new Error('token not found');
+
+    return refreshToken;
+  }
   static async deleteRefreshTokenByToken(token) {} // delete refresh token by token
 
   // verification service
