@@ -16,6 +16,7 @@ router.post(
   AuthRequest.refreshToken,
   ExpressAuth.refreshToken(AuthService)
 );
+router.post('/logout', AuthRequest.logout, ExpressAuth.logout(AuthService));
 
 module.exports = {
   path: '/api/auth',
