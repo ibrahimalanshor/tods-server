@@ -43,7 +43,6 @@ module.exports = class AuthService extends ExpressAuth.PasswordService {
     return user;
   }
 
-  // refresh token service
   static async createRefreshToken(token, user) {
     await RefreshToken.destroy({ where: { userId: user.id } });
 
@@ -62,7 +61,9 @@ module.exports = class AuthService extends ExpressAuth.PasswordService {
 
     return refreshToken;
   }
-  static async deleteRefreshTokenByToken(token) {} // delete refresh token by token
+  static async deleteRefreshTokenByToken(token) {
+    await RefreshToken.destroy({ where: { token } });
+  }
 
   // verification service
   static async createVerification(user) {} // create new verification (user = user object), return created verification
