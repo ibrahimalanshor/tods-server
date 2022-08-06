@@ -1,8 +1,8 @@
 const Todo = require('../model');
 const { optionalObjectProperty } = require('../../../utils');
-const { Service: CategoryService } = require('../helpers/class');
+const { Service: TodoService } = require('../helpers/class');
 
-module.exports = class RelatedTodoService extends CategoryService {
+module.exports = class RelatedTodoService extends TodoService {
   static async get(options = {}) {
     return Todo.findAll({
       include: ['category'],

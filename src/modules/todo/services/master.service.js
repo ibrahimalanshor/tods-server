@@ -1,8 +1,8 @@
 const Todo = require('../model');
 const { modelOrId: todoModelOrId } = require('../helpers');
-const { Service: CategoryService } = require('../helpers/class');
+const { Service: TodoService } = require('../helpers/class');
 
-module.exports = class MasterTodoService extends CategoryService {
+module.exports = class MasterTodoService extends TodoService {
   static async get(options = {}) {
     return Todo.findAll({
       where: {
