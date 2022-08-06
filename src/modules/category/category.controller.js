@@ -1,13 +1,16 @@
 const Response = require('@ibrahimanshor/express-app/lib/response');
-const { MasterCategory, RelatedCategory } = require('./services');
+const { MasterCategory } = require('./services');
+const { extractQueryFilter } = require('../../utils');
 
 module.exports = class CategoryController {
   static async get(req, res, next) {
     try {
       const categories = await MasterCategory.get({
         filter: {
+          name: req.query.name,
           userId: req.user.id,
         },
+        ...extractQueryFilter(req.query),
       });
 
       return new Response.SuccessResponse('', categories).use(res);
@@ -31,7 +34,7 @@ module.exports = class CategoryController {
 
   static async find(req, res, next) {
     try {
-      const category = await RelatedCategory.find(req.params.id);
+      const category = await MasterCategory.find(req.params.id);
 
       req.user.canAccessCategory(category);
 
