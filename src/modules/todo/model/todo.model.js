@@ -12,7 +12,7 @@ module.exports = sequelize.define(
       type: DataTypes.STRING,
     },
     due: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
     },
     status: {
       type: DataTypes.BOOLEAN,

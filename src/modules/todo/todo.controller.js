@@ -1,6 +1,7 @@
 const Response = require('@ibrahimanshor/express-app/lib/response');
 const { MasterTodo, RelatedTodo } = require('./services');
 const { MasterCategory } = require('../category/services');
+const { extractQueryFilter } = require('../../utils');
 
 module.exports = class TodoController {
   static async get(req, res, next) {
@@ -8,7 +9,13 @@ module.exports = class TodoController {
       const todos = await RelatedTodo.get({
         filter: {
           userId: req.user.id,
+          name: req.query.name,
+          due: req.query.due,
+          categoryId: req.query.categoryId,
+          status: req.query.status,
+          late: req.query.late,
         },
+        ...extractQueryFilter(req.query),
       });
 
       return new Response.SuccessResponse('', todos).use(res);
