@@ -1,5 +1,5 @@
 const Response = require('@ibrahimanshor/express-app/lib/response');
-const { MasterCategory } = require('./services');
+const { MasterCategory, RelatedCategory } = require('./services');
 
 module.exports = class CategoryController {
   static async get(req, res, next) {
@@ -31,7 +31,7 @@ module.exports = class CategoryController {
 
   static async find(req, res, next) {
     try {
-      const category = await MasterCategory.findWithTodo(req.params.id);
+      const category = await RelatedCategory.find(req.params.id);
 
       req.user.canAccessCategory(category);
 
