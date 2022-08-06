@@ -1,14 +1,10 @@
 const Category = require('../model');
-const { modelOrId: categoryModelOrId } = require('../helpers');
-const { Service: CategoryService } = require('../helpers/class');
+const CategoryHelper = require('../helpers');
+const { Service } = require('../../../helpers/class');
 
-module.exports = class MasterCategoryService extends CategoryService {
+module.exports = class MasterCategoryService extends Service {
   static async get(options = {}) {
-    return Category.findAll({
-      where: {
-        ...MasterCategoryService.filter(options.filter),
-      },
-    });
+    return Category.findAndCountAll(CategoryHelper.filter(options));
   }
 
   static async create(body) {
@@ -22,13 +18,13 @@ module.exports = class MasterCategoryService extends CategoryService {
   }
 
   static async update(id, body) {
-    let category = await categoryModelOrId(id);
+    let category = await CategoryHelper.modelOrId(id);
 
     return await category.update(body);
   }
 
   static async delete(id) {
-    let category = await categoryModelOrId(id);
+    let category = await CategoryHelper.modelOrId(id);
 
     return await category.destroy();
   }
