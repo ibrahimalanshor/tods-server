@@ -3,4 +3,6 @@ module.exports = {
   sort: require('./sort.js'),
   paginate: require('./paginate.js'),
   extractQueryFilter: require('./extract_query_filter.js'),
+  toBoolean: require('./to_boolean.js'),
+  nullOrUndefined: require('./null_or_undefined.js'),
 };
