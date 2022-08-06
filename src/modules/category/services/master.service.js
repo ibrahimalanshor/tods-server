@@ -4,7 +4,7 @@ const { Service } = require('../../../helpers/class');
 
 module.exports = class MasterCategoryService extends Service {
   static async get(options = {}) {
-    return Category.findAndCountAll(CategoryHelper.filter(options));
+    return await Category.findAndCountAll(CategoryHelper.filter(options));
   }
 
   static async create(body) {
