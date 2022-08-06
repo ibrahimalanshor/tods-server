@@ -3,6 +3,7 @@ const { PasswordService } = require('@ibrahimanshor/express-auth');
 const User = require('../modules/user/model');
 const RefreshToken = require('../modules/refresh_token/model');
 const Category = require('../modules/category/model');
+const Todo = require('../modules/todo/model');
 
 const run = async () => {
   try {
@@ -11,6 +12,7 @@ const run = async () => {
     await User.sync({ force: true });
     await RefreshToken.sync({ force: true });
     await Category.sync({ force: true });
+    await Todo.sync({ force: true });
 
     const password = await PasswordService.hashPassword('userpass');
 
