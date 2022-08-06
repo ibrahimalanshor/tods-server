@@ -1,7 +1,7 @@
 const { optionalObjectProperty } = require('../../../../utils');
 const { Service } = require('../../../../helpers/class');
 
-module.exports = class CategoryService extends Service {
+module.exports = class TodoService extends Service {
   static filter(params = {}) {
     const { userId = '' } = params;
 
