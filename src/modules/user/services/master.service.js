@@ -1,17 +1,12 @@
-const { UniqueConstraintError } = require('sequelize');
-const Exception = require('@ibrahimanshor/express-app/lib/exceptions');
 const User = require('../model');
-const UserModelHelper = require('../helpers/model');
-const { Service } = require('../../../helpers/class');
+const { isConflict, findOrFail, modelOrId } = require('../../../helpers');
 
-module.exports = class MasterUserService extends Service {
+module.exports = class MasterUserService {
   static async create(body) {
     try {
       return await User.create(body);
     } catch (err) {
-      if (err instanceof UniqueConstraintError) {
-        throw new Exception.ConflictException('user already exists');
-      }
+      isConflict(err);
 
       throw err;
     }
@@ -20,26 +15,16 @@ module.exports = class MasterUserService extends Service {
   static async find(id) {
     const user = await User.findByPk(id);
 
-    return MasterUserService.findOrFail(user);
-  }
-
-  static async findByEmail(email) {
-    const user = await User.unscoped().findOne({
-      where: { email },
-    });
-
-    return MasterUserService.findOrFail(user);
+    return findOrFail(user);
   }
 
   static async update(id, body) {
     try {
-      const user = await UserModelHelper.modelOrId(id);
+      const user = await modelOrId(User, id);
 
       return await user.update(body);
     } catch (err) {
-      if (err instanceof UniqueConstraintError) {
-        throw new Exception.ConflictException('user already exists');
-      }
+      isConflict(err);
 
       throw err;
     }

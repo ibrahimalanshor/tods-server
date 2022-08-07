@@ -1,8 +1,8 @@
 const Todo = require('../model');
 const { filter } = require('../helpers/model');
-const { Service } = require('../../../helpers/class');
+const { findOrFail, modelOrId } = require('../../../helpers');
 
-module.exports = class RelatedTodoService extends Service {
+module.exports = class RelatedTodoService {
   static async get(options = {}) {
     return await Todo.scope('parent').findAll({
       include: ['category'],
@@ -10,11 +10,17 @@ module.exports = class RelatedTodoService extends Service {
     });
   }
 
+  static async findParent(id) {
+    const todo = await Todo.scope('parent').findByPk(id);
+
+    return findOrFail(todo);
+  }
+
   static async find(id) {
     const todo = await Todo.findByPk(id, {
       include: ['category', 'children'],
     });
 
-    return RelatedTodoService.findOrFail(todo);
+    return findOrFail(todo);
   }
 };

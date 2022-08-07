@@ -1,6 +1,7 @@
 # Tods Server
 
-- [ ] Setup Project
-- [ ] Dev & Integrate
+- [x] Setup Project
+- [x] Dev
+- [ ] Integrate
 - [ ] Test
 - [ ] Publish

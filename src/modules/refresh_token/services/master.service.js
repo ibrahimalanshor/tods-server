@@ -1,17 +1,17 @@
 const RefreshToken = require('../model');
-const { Service } = require('../../../helpers/class');
+const { findOrFail } = require('../../../helpers');
 
-module.exports = class MasterRefreshTokenService extends Service {
+module.exports = class MasterRefreshTokenService {
   static async create(body) {
     return await RefreshToken.create(body);
   }
 
   static async findByToken(token) {
-    const refreshToken = await RefreshToken.unscoped().findOne({
+    const refreshToken = await RefreshToken.findOne({
       where: { token },
     });
 
-    return MasterRefreshTokenService.findOrFail(refreshToken);
+    return findOrFail(refreshToken);
   }
 
   static async deleteByUserId(userId) {

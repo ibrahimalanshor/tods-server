@@ -5,7 +5,10 @@ const { auth } = require('../auth/middlewares');
 
 const router = Router();
 
-router.route('/').patch(auth, ProfileRequest.update, ProfileController.update);
+router
+  .route('/')
+  .get(auth, ProfileController.get)
+  .patch(auth, ProfileRequest.update, ProfileController.update);
 
 module.exports = {
   path: '/api/profile',

@@ -1,7 +1,9 @@
 const ExpressAuth = require('@ibrahimanshor/express-auth');
 const config = require('../../../../config');
+const User = require('../../user/model');
 const { MasterUser } = require('../../user/services');
 const { MasterRefreshToken } = require('../../refresh_token/services');
+const { findOrFail } = require('../../../helpers');
 
 module.exports = class AuthService extends ExpressAuth.PasswordService {
   static config = {
@@ -17,7 +19,11 @@ module.exports = class AuthService extends ExpressAuth.PasswordService {
     return await MasterUser.create(credentials);
   }
   static async getUserByEmail(email) {
-    return await MasterUser.findByEmail(email);
+    const user = await User.unscoped().findOne({
+      where: { email },
+    });
+
+    return findOrFail(user);
   }
   static async getUserById(id) {
     return await MasterUser.find(id);

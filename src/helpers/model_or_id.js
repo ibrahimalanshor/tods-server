@@ -1,6 +1,6 @@
 const Exception = require('@ibrahimanshor/express-app/lib/exceptions');
 
-module.exports = (Model) => async (id) => {
+module.exports = async (Model, id) => {
   let instance = id;
 
   if (!(instance instanceof Model)) {

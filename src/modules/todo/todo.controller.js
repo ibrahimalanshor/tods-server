@@ -32,7 +32,7 @@ module.exports = class TodoController {
       }
 
       if (req.body.parentId) {
-        const parent = await MasterTodo.findParent(req.body.parentId);
+        const parent = await RelatedTodo.findParent(req.body.parentId);
         req.user.canAccessTodo(parent);
       }
 
@@ -71,7 +71,7 @@ module.exports = class TodoController {
       if (req.body.parentId) {
         todo.mustChildren();
 
-        const parent = await MasterTodo.findParent(req.body.parentId);
+        const parent = await RelatedTodo.findParent(req.body.parentId);
 
         req.user.canAccessTodo(parent);
       }
