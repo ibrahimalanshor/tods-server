@@ -23,6 +23,11 @@ module.exports = (options = {}) => ({
       options.filter.categoryId
     ),
     ...optionalObjectProperty(
+      options.filter?.parentId,
+      'parentId',
+      options.filter.parentId
+    ),
+    ...optionalObjectProperty(
       options.filter?.status,
       'status',
       toBoolean(options.filter.status)
