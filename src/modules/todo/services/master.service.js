@@ -1,10 +1,10 @@
 const Todo = require('../model');
-const CategoryHelper = require('../helpers');
+const CategoryModelHelper = require('../helpers/model');
 const { Service } = require('../../../helpers/class');
 
 module.exports = class MasterTodoService extends Service {
   static async get(options = {}) {
-    return await Todo.findAndCountAll(CategoryHelper.filter(options));
+    return await Todo.findAndCountAll(CategoryModelHelper.filter(options));
   }
 
   static async create(body) {
@@ -24,13 +24,13 @@ module.exports = class MasterTodoService extends Service {
   }
 
   static async update(id, body) {
-    const todo = await CategoryHelper.modelOrId(id);
+    const todo = await CategoryModelHelper.modelOrId(id);
 
     return await todo.update(body);
   }
 
   static async delete(id) {
-    const todo = await CategoryHelper.modelOrId(id);
+    const todo = await CategoryModelHelper.modelOrId(id);
 
     return await todo.destroy();
   }

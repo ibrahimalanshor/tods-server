@@ -4,7 +4,7 @@ const {
   sort,
   paginate,
   toBoolean,
-} = require('../../../utils');
+} = require('../../../../utils');
 
 module.exports = (options = {}) => ({
   where: {
