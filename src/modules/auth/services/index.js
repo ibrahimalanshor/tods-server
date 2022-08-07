@@ -58,6 +58,8 @@ module.exports = class AuthService extends ExpressAuth.PasswordService {
     });
 
     if (!refreshToken) throw new Error('token not found');
+    if (new Date() > new Date(refreshToken.expireAt))
+      throw new Error('token expired');
 
     return refreshToken;
   }
