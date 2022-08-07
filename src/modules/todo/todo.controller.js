@@ -31,6 +31,11 @@ module.exports = class TodoController {
         req.user.canAccessCategory(category);
       }
 
+      if (req.body.parentId) {
+        const parent = await MasterTodo.findParent(req.body.parentId);
+        req.user.canAccessTodo(parent);
+      }
+
       const todo = await MasterTodo.create({
         ...req.body,
         userId: req.user.id,
@@ -61,6 +66,14 @@ module.exports = class TodoController {
       if (req.body.categoryId) {
         const category = await MasterCategory.find(req.body.categoryId);
         req.user.canAccessCategory(category);
+      }
+
+      if (req.body.parentId) {
+        todo.mustChildren();
+
+        const parent = await MasterTodo.findParent(req.body.parentId);
+
+        req.user.canAccessTodo(parent);
       }
 
       await MasterTodo.update(todo, req.body);
