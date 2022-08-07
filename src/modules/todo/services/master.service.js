@@ -17,6 +17,12 @@ module.exports = class MasterTodoService extends Service {
     return MasterTodoService.findOrFail(todo);
   }
 
+  static async findParent(id) {
+    const todo = await Todo.scope('parent').findByPk(id);
+
+    return MasterTodoService.findOrFail(todo);
+  }
+
   static async update(id, body) {
     const todo = await CategoryHelper.modelOrId(id);
 

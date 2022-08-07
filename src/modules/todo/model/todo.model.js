@@ -22,5 +22,12 @@ module.exports = sequelize.define(
   },
   {
     tableName: 'todos',
+    scopes: {
+      parent: {
+        where: {
+          parentId: null,
+        },
+      },
+    },
   }
 );
