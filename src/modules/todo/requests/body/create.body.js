@@ -29,4 +29,11 @@ module.exports = [
     .bail()
     .isInt()
     .bail(),
+  body('parentId')
+    .optional({ nullable: true, checkFalsy: true })
+    .bail()
+    .notEmpty()
+    .bail()
+    .isInt()
+    .bail(),
 ];
