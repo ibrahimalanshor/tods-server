@@ -1,9 +1,7 @@
-const Exception = require('@ibrahimanshor/express-app/lib/exceptions');
 const ExpressAuth = require('@ibrahimanshor/express-auth');
 const config = require('../../../../config');
-const User = require('../../user/model');
-const RefreshToken = require('../../refresh_token/model');
-const { UniqueConstraintError } = require('sequelize');
+const { MasterUser } = require('../../user/services');
+const { MasterRefreshToken } = require('../../refresh_token/services');
 
 module.exports = class AuthService extends ExpressAuth.PasswordService {
   static config = {
@@ -16,46 +14,26 @@ module.exports = class AuthService extends ExpressAuth.PasswordService {
   };
 
   static async createUser(credentials) {
-    try {
-      return await User.create(credentials);
-    } catch (err) {
-      if (err instanceof UniqueConstraintError) {
-        throw new Exception.ConflictException('email already exists');
-      }
-
-      throw err;
-    }
+    return await MasterUser.create(credentials);
   }
   static async getUserByEmail(email) {
-    const user = await User.unscoped().findOne({
-      where: { email },
-    });
-
-    if (!user) throw new Error('email not found');
-
-    return user;
+    return await MasterUser.findByEmail(email);
   }
   static async getUserById(id) {
-    const user = await User.findByPk(id);
-
-    if (!user) throw new Error('user not found');
-
-    return user;
+    return await MasterUser.find(id);
   }
 
   static async createRefreshToken(token, user) {
-    await RefreshToken.destroy({ where: { userId: user.id } });
+    await MasterRefreshToken.deleteByUserId(user.id);
 
-    return await RefreshToken.create({
+    return await MasterRefreshToken.create({
       userId: user.id,
       expireAt: Date.now() + 1000 * 86400 * 30,
       token,
     });
   }
   static async getRefreshTokenByToken(token) {
-    const refreshToken = await RefreshToken.findOne({
-      where: { token },
-    });
+    const refreshToken = await MasterRefreshToken.findByToken(token);
 
     if (!refreshToken) throw new Error('token not found');
     if (new Date() > new Date(refreshToken.expireAt))
@@ -64,7 +42,7 @@ module.exports = class AuthService extends ExpressAuth.PasswordService {
     return refreshToken;
   }
   static async deleteRefreshTokenByToken(token) {
-    await RefreshToken.destroy({ where: { token } });
+    await MasterRefreshToken.deleteByToken(token);
   }
 
   // verification service

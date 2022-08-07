@@ -1,5 +1,5 @@
 const Todo = require('../model');
-const { filter } = require('../helpers');
+const { filter } = require('../helpers/model');
 const { Service } = require('../../../helpers/class');
 
 module.exports = class RelatedTodoService extends Service {

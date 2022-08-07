@@ -1,5 +1,5 @@
 const { Op } = require('sequelize');
-const { optionalObjectProperty, sort, paginate } = require('../../../utils');
+const { optionalObjectProperty, sort, paginate } = require('../../../../utils');
 
 module.exports = (options = {}) => ({
   where: {
