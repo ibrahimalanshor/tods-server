@@ -1,4 +1,1 @@
-const nullOrUndefined = require('./null_or_undefined.js');
-
-module.exports = (cond, key, val) =>
-  !nullOrUndefined(cond) ? { [key]: val } : {};
+module.exports = (cond, key, val) => (cond !== undefined ? { [key]: val } : {});
