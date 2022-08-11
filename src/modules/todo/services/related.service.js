@@ -4,7 +4,7 @@ const { findOrFail, modelOrId } = require('../../../helpers');
 
 module.exports = class RelatedTodoService {
   static async get(options = {}) {
-    return await Todo.scope('parent').findAll({
+    return await Todo.scope('parent').findAndCountAll({
       include: ['category'],
       ...filter(options),
     });
