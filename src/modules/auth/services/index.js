@@ -41,13 +41,14 @@ module.exports = class AuthService extends ExpressAuth.PasswordService {
   static async getRefreshTokenByToken(token) {
     const refreshToken = await MasterRefreshToken.findByToken(token);
 
-    if (!refreshToken) throw new Error('token not found');
     if (new Date() > new Date(refreshToken.expireAt))
       throw new Error('token expired');
 
     return refreshToken;
   }
   static async deleteRefreshTokenByToken(token) {
+    const refreshToken = await MasterRefreshToken.findByToken(token);
+
     await MasterRefreshToken.deleteByToken(token);
   }
 
