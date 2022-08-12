@@ -17,8 +17,8 @@ router
   .delete(auth, TodoController.delete);
 
 router
-  .route('/:id/status')
-  .patch(auth, TodoRequest.updateStatus, TodoController.updateStatus);
+  .route('/:id/done')
+  .patch(auth, TodoRequest.updateDone, TodoController.updateDone);
 
 module.exports = {
   path: '/api/todos',

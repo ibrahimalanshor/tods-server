@@ -12,7 +12,7 @@ module.exports = class TodoController {
           name: req.query.name,
           due: req.query.due,
           categoryId: req.query.categoryId,
-          status: req.query.status,
+          done: req.query.done,
           late: req.query.late,
         },
         ...extractQueryFilter(req.query),
@@ -84,13 +84,13 @@ module.exports = class TodoController {
     }
   }
 
-  static async updateStatus(req, res, next) {
+  static async updateDone(req, res, next) {
     try {
       const todo = await MasterTodo.find(req.params.id);
       req.user.canAccessTodo(todo);
 
       await MasterTodo.update(todo, {
-        status: req.body.status,
+        done: req.body.done,
       });
 
       return new Response.SuccessResponse('', todo).use(res);
