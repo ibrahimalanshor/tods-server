@@ -4,7 +4,10 @@ const { modelOrId, findOrFail } = require('../../../helpers');
 
 module.exports = class MasterCategoryService {
   static async get(options = {}) {
-    return await Category.findAndCountAll(CategoryModelHelper.filter(options));
+    const rows = await Category.findAll(CategoryModelHelper.filter(options));
+    const count = await Category.count(CategoryModelHelper.count(options));
+
+    return { count, rows };
   }
 
   static async create(body) {
