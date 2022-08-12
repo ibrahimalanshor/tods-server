@@ -1,4 +1,5 @@
 const { body } = require('express-validator');
+const { passwordConfirmed } = require('../../helpers/validator');
 
 module.exports = [
   body('name').exists().bail().notEmpty().bail().isString().bail(),
@@ -11,4 +12,5 @@ module.exports = [
     .bail()
     .isLength({ min: 5 })
     .bail(),
+  body('password_confirmation').custom(passwordConfirmed),
 ];
