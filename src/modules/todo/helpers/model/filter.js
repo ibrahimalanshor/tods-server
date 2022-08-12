@@ -28,14 +28,14 @@ module.exports = (options = {}) => ({
       options.filter.parentId
     ),
     ...optionalObjectProperty(
-      options.filter?.status,
-      'status',
-      toBoolean(options.filter.status)
+      options.filter?.done,
+      'done',
+      toBoolean(options.filter.done)
     ),
     ...optionalObjectProperty(options.filter?.late, 'due', {
       [Op.lt]: options.filter.late,
     }),
-    ...optionalObjectProperty(options.filter?.late, 'status', false),
+    ...optionalObjectProperty(options.filter?.late, 'done', false),
   },
   ...sort(options),
   ...paginate(options),

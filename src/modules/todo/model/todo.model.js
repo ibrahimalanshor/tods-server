@@ -14,7 +14,7 @@ module.exports = sequelize.define(
     due: {
       type: DataTypes.DATEONLY,
     },
-    status: {
+    done: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false,
