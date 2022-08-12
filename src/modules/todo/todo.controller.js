@@ -89,9 +89,7 @@ module.exports = class TodoController {
       const todo = await MasterTodo.find(req.params.id);
       req.user.canAccessTodo(todo);
 
-      await MasterTodo.update(todo, {
-        done: req.body.done,
-      });
+      await MasterTodo.updateDone(todo, req.body.done);
 
       return new Response.SuccessResponse('', todo).use(res);
     } catch (err) {
