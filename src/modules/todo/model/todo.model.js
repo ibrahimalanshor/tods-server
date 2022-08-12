@@ -19,6 +19,9 @@ module.exports = sequelize.define(
       allowNull: false,
       defaultValue: false,
     },
+    doneAt: {
+      type: DataTypes.DATE,
+    },
   },
   {
     tableName: 'todos',

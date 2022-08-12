@@ -18,6 +18,13 @@ module.exports = class MasterTodoService {
     return await todo.update(body);
   }
 
+  static async updateDone(id, done) {
+    const todo = await modelOrId(Todo, id);
+    const doneAt = done ? new Date() : null;
+
+    return await todo.update({ done, doneAt });
+  }
+
   static async delete(id) {
     const todo = await modelOrId(Todo, id);
 
