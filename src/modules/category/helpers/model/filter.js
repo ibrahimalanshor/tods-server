@@ -10,7 +10,7 @@ module.exports = (options = {}) => {
   const sort =
     options?.sort === 'todoCount'
       ? {
-          order: [[literal('todoCount'), options?.order ?? 'DESC']],
+          order: [[literal('todoCount'), options?.order || 'DESC']],
         }
       : sortUtil(options);
 
@@ -22,6 +22,7 @@ module.exports = (options = {}) => {
       {
         model: Todo,
         attributes: [],
+        duplicating: false,
       },
     ],
     where: {
