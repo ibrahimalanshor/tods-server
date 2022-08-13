@@ -9,6 +9,7 @@ module.exports = class CategoryController {
         filter: {
           name: req.query.name,
           userId: req.user.id,
+          hasTodo: req.query.hasTodo,
         },
         ...extractQueryFilter(req.query),
       });

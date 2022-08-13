@@ -23,6 +23,7 @@ module.exports = (options = {}) => {
         model: Todo,
         attributes: [],
         duplicating: false,
+        required: options.filter?.hasTodo,
       },
     ],
     where: {
