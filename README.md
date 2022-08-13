@@ -2,6 +2,6 @@
 
 - [x] Setup Project
 - [x] Dev
-- [ ] Integrate
-- [ ] Test
+- [x] Integrate
+- [x] Test
 - [ ] Publish
